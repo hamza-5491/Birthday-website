@@ -8,8 +8,38 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
- 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <style>
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(50%);
+            }
+
+            /* move RIGHT by 50% of track width */
+        }
+
+        /* apply animation and allow pause on hover */
+        .marquee-track {
+            animation: marquee 10s linear infinite;
+            will-change: transform;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Duplicate track layout helper */
+        .marquee-inner {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
         /* Floating heart animation */
         @keyframes float {
             0% {
@@ -30,6 +60,7 @@
             font-size: 2rem;
             color: #ef4444;
         }
+
         /* ---------------- Reset & base ---------------- */
         * {
             box-sizing: border-box;
@@ -759,23 +790,48 @@
     </section>
 
     <!-- Memories Section -->
-    <section id="memoriesSection" class="hidden px-4 py-12">
-        <h2 class="text-3xl font-bold text-center text-rose-600 mb-8">Our Memories 📸</h2>
-        <div class="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
-            <img src="https://i.pinimg.com/736x/49/10/88/491088203598f48a7cf376f859e05484.jpg" alt="memory1"
-                class="rounded-xl shadow-md hover:scale-105 transition">
-            <img src="https://i.pinimg.com/736x/fa/4c/0a/fa4c0a5f898d0debbc82949232386cda.jpg" alt="memory2"
-                class="rounded-xl shadow-md hover:scale-105 transition">
-            <img src="https://i.pinimg.com/736x/06/a0/3f/06a03f0bb6dc42325c0a7690f95fdad8.jpg" alt="memory3"
-                class="rounded-xl shadow-md hover:scale-105 transition">
-            <img src="https://i.pinimg.com/736x/5e/9b/e4/5e9be408b3639ed53691fd17487bc57d.jpg" alt="memory4"
-                class="rounded-xl shadow-md hover:scale-105 transition">
-            <img src="https://i.pinimg.com/736x/e0/2c/82/e02c82cc4413c70884068606f8f45e52.jpg" alt="memory5"
-                class="rounded-xl shadow-md hover:scale-105 transition">
-            <img src="https://i.pinimg.com/736x/44/8b/ab/448bab5c76d96de8c014d371ffcbb359.jpg" alt="memory6"
-                class="rounded-xl shadow-md hover:scale-105 transition">
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-rose-600 mb-10">Our Memories 📸</h2>
+
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/49/10/88/491088203598f48a7cf376f859e05484.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/fa/4c/0a/fa4c0a5f898d0debbc82949232386cda.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/06/a0/3f/06a03f0bb6dc42325c0a7690f95fdad8.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/5e/9b/e4/5e9be408b3639ed53691fd17487bc57d.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/e0/2c/82/e02c82cc4413c70884068606f8f45e52.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://i.pinimg.com/736x/44/8b/ab/448bab5c76d96de8c014d371ffcbb359.jpg"
+                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="swiper-pagination"></div>
+            <!-- <div class="swiper-button-next"></div> -->
+            <!-- <div class="swiper-button-prev"></div> -->
         </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
     <script>
         /* ---------------- Utilities & DOM references ---------------- */
@@ -979,6 +1035,30 @@
         document.getElementById("memoriesBtn").addEventListener("click", () => {
             document.getElementById("memoriesSection").classList.toggle("hidden");
             window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+        });
+
+
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            centeredSlides: true,
+            autoplay: {
+                delay: 1200,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
         });
 
     </script>
