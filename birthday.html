@@ -1,1067 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Premium Responsive Birthday</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-    <style>
-        @keyframes marquee {
-            0% {
-                transform: translateX(0%);
-            }
-
-            100% {
-                transform: translateX(50%);
-            }
-
-            /* move RIGHT by 50% of track width */
-        }
-
-        /* apply animation and allow pause on hover */
-        .marquee-track {
-            animation: marquee 10s linear infinite;
-            will-change: transform;
-        }
-
-        .marquee-track:hover {
-            animation-play-state: paused;
-        }
-
-        /* Duplicate track layout helper */
-        .marquee-inner {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        /* Floating heart animation */
-        @keyframes float {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-800px) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        .heart {
-            position: absolute;
-            bottom: 0;
-            animation: float 8s linear infinite;
-            font-size: 2rem;
-            color: #ef4444;
-        }
-
-        /* ---------------- Reset & base ---------------- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        html,
-        body {
-            height: 100%
-        }
-
-        body {
-            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial;
-            background: #fff0f6;
-            color: #172033;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-        }
-
-        /* ---------------- Page container ---------------- */
-        .page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 36px 20px;
-            gap: 28px;
-            position: relative;
-            background-image:
-                linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-                linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-            background-size: 26px 26px, 26px 26px;
-        }
-
-        /* subtle shadow frame */
-        .frame {
-            width: 100%;
-            max-width: 1100px;
-            border-radius: 16px;
-            padding: 18px;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 250, 252, 0.95));
-            box-shadow: 0 20px 48px rgba(20, 30, 40, 0.06);
-            position: relative;
-            overflow: visible;
-        }
-
-        /* ---------------- Ribbons (SVG shapes via background) ---------------- */
-        .ribbon {
-            position: absolute;
-            top: -18px;
-            width: 160px;
-            height: 140px;
-            z-index: 12;
-            filter: drop-shadow(0 18px 30px rgba(255, 77, 136, 0.13));
-        }
-
-        .ribbon.left {
-            left: -24px;
-            transform: rotate(-6deg);
-        }
-
-        .ribbon.right {
-            right: -24px;
-            transform: rotate(6deg);
-        }
-
-        /* ---------------- HERO layout ---------------- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 26px;
-            align-items: center;
-            padding: 28px;
-        }
-
-        @media (max-width:920px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 18px;
-                gap: 18px;
-            }
-        }
-
-        /* left side: title, subtitle, ctAs */
-        .hero-left {
-            position: relative;
-            padding: 6px 12px;
-            z-index: 6;
-        }
-
-        .title {
-            font-weight: 800;
-            font-size: 52px;
-            line-height: 0.9;
-            color: #2b2b2f;
-            letter-spacing: -1px;
-            display: inline-block;
-        }
-
-        @media (max-width:720px) {
-            .title {
-                font-size: 36px
-            }
-        }
-
-        .title-words {
-            display: block
-        }
-
-        .letter {
-            display: inline-block;
-            transform: translateY(130%);
-            opacity: 0;
-            animation: letterUp .55s cubic-bezier(.2, .9, .2, 1) forwards;
-        }
-
-        .letter:nth-child(1) {
-            animation-delay: .08s
-        }
-
-        .letter:nth-child(2) {
-            animation-delay: .16s
-        }
-
-        .letter:nth-child(3) {
-            animation-delay: .24s
-        }
-
-        .letter:nth-child(4) {
-            animation-delay: .32s
-        }
-
-        .letter:nth-child(5) {
-            animation-delay: .40s
-        }
-
-        .letter:nth-child(6) {
-            animation-delay: .48s
-        }
-
-        .letter:nth-child(7) {
-            animation-delay: .56s
-        }
-
-        .letter:nth-child(8) {
-            animation-delay: .64s
-        }
-
-        .letter:nth-child(9) {
-            animation-delay: .72s
-        }
-
-        @keyframes letterUp {
-            to {
-                transform: translateY(0);
-                opacity: 1
-            }
-        }
-
-        .subtitle {
-            margin-top: 14px;
-            color: #616579;
-            font-size: 16px;
-            max-width: 560px
-        }
-
-        /* CAP (svg) - start off-screen and drop */
-        .cap {
-            position: absolute;
-            width: 110px;
-            height: auto;
-            left: 20%;
-            top: -260px;
-            transform-origin: center;
-            z-index: 8;
-            filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.12));
-            will-change: transform, top;
-        }
-
-        /* CTA row */
-        .cta {
-            margin-top: 22px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap
-        }
-
-        .btn {
-            background: linear-gradient(90deg, #ff6aa2, #ff4d88);
-            color: #fff;
-            padding: 12px 18px;
-            border-radius: 999px;
-            font-weight: 700;
-            border: 0;
-            cursor: pointer;
-            box-shadow: 0 10px 24px rgba(255, 77, 136, 0.12);
-            transition: transform .18s ease, box-shadow .18s;
-        }
-
-        .btn:active {
-            transform: translateY(1px)
-        }
-
-        .btn.secondary {
-            background: linear-gradient(90deg, #54a0ff, #7ad7ff);
-            color: #062037;
-        }
-
-        /* ---------------- right side: profile & balloons ---------------- */
-        .hero-right {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 6px
-        }
-
-        @media (max-width:920px) {
-            .hero-right {
-                justify-content: flex-start
-            }
-        }
-
-        .profile-wrap {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 6
-        }
-
-        .profile-img {
-            width: 170px;
-            height: 170px;
-            border-radius: 999px;
-            overflow: hidden;
-            border: 6px solid #fff;
-            box-shadow: 0 18px 45px rgba(10, 10, 12, 0.08)
-        }
-
-        .profile-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        /* neon-ish spinning ring */
-        .ring {
-            position: absolute;
-            inset: 0;
-            border-radius: 999px;
-            padding: 6px;
-            background: conic-gradient(from 160deg, #ff7aa6, #ffd27a, #7ad7ff, #ff7aa6);
-            mask: radial-gradient(farthest-side, transparent 62%, black 63%);
-            filter: blur(6px) saturate(1.05) opacity(.95);
-            transform: scale(1);
-            animation: spin 8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        /* balloons stack */
-        .balloon-pack {
-            position: absolute;
-            right: 24px;
-            top: 12%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            z-index: 7
-        }
-
-        @media (max-width:920px) {
-            .balloon-pack {
-                position: static;
-                order: 2;
-                margin-left: 8px
-            }
-        }
-
-        .balloon {
-            width: 70px;
-            height: 88px;
-            border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%;
-            position: relative;
-            display: block;
-            transform-origin: center bottom;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .balloon::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 92%;
-            width: 3px;
-            height: 58px;
-            background: rgba(0, 0, 0, 0.12)
-        }
-
-        .b1 {
-            background: linear-gradient(180deg, #ff6aa2, #ff3b7a);
-            animation: balloonFloat 4.6s ease-in-out infinite
-        }
-
-        .b2 {
-            background: linear-gradient(180deg, #ff9ecf, #ff6aa2);
-            animation: balloonFloat 5.6s ease-in-out .6s infinite
-        }
-
-        .b3 {
-            background: linear-gradient(180deg, #ffd1e8, #ff9ecf);
-            animation: balloonFloat 5.2s ease-in-out .3s infinite
-        }
-
-        .b4 {
-            background: linear-gradient(180deg, #ffc4e0, #ffa6d1);
-            animation: balloonFloat 6.0s ease-in-out .9s infinite
-        }
-
-        @keyframes balloonFloat {
-            0% {
-                transform: translateY(0) rotate(-6deg)
-            }
-
-            50% {
-                transform: translateY(-22px) rotate(8deg)
-            }
-
-            100% {
-                transform: translateY(0) rotate(-6deg)
-            }
-        }
-
-        /* ---------------- 3D folding card modal ---------------- */
-        .card-modal {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 120;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity .22s;
-        }
-
-        .card-modal.active {
-            pointer-events: auto;
-            opacity: 1
-        }
-
-        .backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(10, 10, 12, 0.58);
-            backdrop-filter: blur(4px)
-        }
-
-        .card-stage {
-            position: relative;
-            width: 760px;
-            max-width: 94%;
-            perspective: 1600px;
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-
-        @media (max-width:760px) {
-            .card-stage {
-                width: 92%;
-            }
-        }
-
-        .card {
-            width: 680px;
-            max-width: 100%;
-            height: 380px;
-            transform-style: preserve-3d;
-            position: relative;
-            transition: transform .9s cubic-bezier(.22, .9, .3, 1);
-        }
-
-        .panel {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 50%;
-            overflow: hidden;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 26px;
-            background: linear-gradient(180deg, #fff7fb, #fff2f8);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12)
-        }
-
-        .left {
-            left: 0;
-            transform-origin: left center;
-            border-right: 1px solid rgba(0, 0, 0, 0.04)
-        }
-
-        .right {
-            right: 0;
-            transform-origin: right center;
-            border-left: 1px solid rgba(0, 0, 0, 0.04);
-            background: linear-gradient(180deg, #fff, #ffefef)
-        }
-
-        .card-stage.open .left {
-            transform: rotateY(-160deg);
-            transition: transform .9s cubic-bezier(.22, .9, .3, 1)
-        }
-
-        .card-stage.closed .left {
-            transform: rotateY(0)
-        }
-
-        .panel h3 {
-            color: #ff4d88;
-            font-size: 20px;
-            margin-bottom: 12px
-        }
-
-        .panel p {
-            color: #333;
-            font-size: 16px;
-            line-height: 1.4;
-            text-align: center
-        }
-
-        /* emojis area inside card */
-        .emojis {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 8px
-        }
-
-        .emoji {
-            font-size: 34px;
-            animation: pop .9s ease both
-        }
-
-        @keyframes pop {
-            from {
-                transform: scale(.3) rotate(-8deg);
-                opacity: 0
-            }
-
-            to {
-                transform: none;
-                opacity: 1
-            }
-        }
-
-        /* floating emoji particles (DOM) */
-        .floating-emoji {
-            position: fixed;
-            font-size: 28px;
-            z-index: 140;
-            pointer-events: none;
-            transform: translateY(0);
-            animation: emojiRise 2.8s linear forwards
-        }
-
-        @keyframes emojiRise {
-            to {
-                transform: translateY(-220px) scale(1.3);
-                opacity: 0
-            }
-        }
-
-        /* confetti canvas */
-        canvas.confetti {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 130
-        }
-
-        /* close X */
-        .close-x {
-            position: absolute;
-            top: -26px;
-            right: -18px;
-            width: 44px;
-            height: 44px;
-            background: #fff;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12)
-        }
-
-        /* small footer area inside frame */
-        .extra {
-            display: flex;
-            gap: 18px;
-            margin-top: 8px;
-            justify-content: space-between;
-            align-items: flex-start
-        }
-
-        @media (max-width:760px) {
-            .extra {
-                flex-direction: column;
-                gap: 12px
-            }
-        }
-
-        /* utility */
-        .center {
-            display: flex;
-            align-items: center;
-            justify-content: center
-        }
-
-        /* accessible focus styles */
-        .btn:focus,
-        .close-x:focus {
-            outline: 3px solid rgba(255, 77, 136, 0.18);
-            outline-offset: 3px
-        }
-
-        /* responsive tweaks */
-        @media (max-width:520px) {
-            .profile-wrap {
-                width: 160px;
-                height: 160px
-            }
-
-            .profile-img {
-                width: 120px;
-                height: 120px
-            }
-
-            .title {
-                font-size: 30px
-            }
-
-            .cap {
-                width: 72px;
-                left: 10%
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖 For My Love — A Magical Surprise 💫</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1a001f, #090010 80%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .fade { opacity: 0; transform: translateY(40px); transition: opacity 1.2s ease, transform 1.2s ease; }
+    .fade.show { opacity: 1; transform: translateY(0); }
+
+    .btn {
+      background: linear-gradient(135deg, #ff7bbf, #b14eff);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 0 25px rgba(255, 80, 180, 0.4);
+      transition: all 0.3s ease;
+    }
+    .btn:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(255, 80, 180, 0.6); }
+
+    .cake {
+      position: relative;
+      width: 200px;
+      height: 180px;
+      margin: auto;
+    }
+    .cake-base {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(to bottom, #ffb6e6, #ff69b4);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+    }
+    .candle {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 50px;
+      background: linear-gradient(to bottom, #fff, #ffe4f3);
+      border-radius: 6px;
+    }
+    .flame {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 28px;
+      background: radial-gradient(circle, #fff7a0, #ff930f 70%);
+      border-radius: 50%;
+      animation: flicker 0.15s infinite alternate;
+      box-shadow: 0 0 15px 5px rgba(255, 200, 120, 0.6);
+    }
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+      100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+
+    .magic-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: all 0.6s ease;
+    }
+    .magic-card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.15);
+    }
+
+    .swiper-slide img {
+      border-radius: 18px;
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      box-shadow: 0 0 30px rgba(255, 110, 180, 0.3);
+    }
+  </style>
 </head>
 
-<body class="overflow-x-hidden">
+<body>
+  <div class="min-h-screen flex flex-col items-center justify-center text-center p-4">
 
-    <div class="page">
-        <div class="frame" role="main">
-
-            <!-- ribbons as inline SVGs for crispness -->
-            <svg class="ribbon left" viewBox="0 0 200 200" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
-                <defs>
-                    <linearGradient id="r1" x1="0" x2="1">
-                        <stop offset="0" stop-color="#ff8bb2" />
-                        <stop offset="1" stop-color="#ff4d88" />
-                    </linearGradient>
-                </defs>
-                <path d="M40 10 L160 10 L180 45 L150 160 L100 120 L50 160 L20 45 Z" fill="url(#r1)" />
-            </svg>
-
-            <svg class="ribbon right" viewBox="0 0 200 200" preserveAspectRatio="xMinYMin meet" aria-hidden="true">
-                <defs>
-                    <linearGradient id="r2" x1="0" x2="1">
-                        <stop offset="0" stop-color="#ff8bb2" />
-                        <stop offset="1" stop-color="#ff4d88" />
-                    </linearGradient>
-                </defs>
-                <path d="M40 10 L160 10 L180 45 L150 160 L100 120 L50 160 L20 45 Z" fill="url(#r2)" />
-            </svg>
-
-            <!-- HERO -->
-            <div class="hero" id="hero">
-                <!-- left -->
-                <div class="hero-left">
-                    <div class="title" aria-hidden="true">
-                        <!-- "Happy" as letters -->
-                        <span class="title-words ml-10">
-                            <span class="letter" style="animation-delay:.08s">H</span>
-                            <span class="letter" style="animation-delay:.16s">a</span>
-                            <span class="letter" style="animation-delay:.24s">p</span>
-                            <span class="letter" style="animation-delay:.32s">p</span>
-                            <span class="letter" style="animation-delay:.40s">y</span>
-                        </span>
-                        <br>
-                        <!-- "Birthday" -->
-                        <span class="title-words" id="birthdayWord">
-                            <span class="letter" style="animation-delay:.48s">B</span>
-                            <span class="letter" style="animation-delay:.56s">i</span>
-                            <span class="letter" style="animation-delay:.64s">r</span>
-                            <span class="letter" style="animation-delay:.72s">t</span>
-                            <span class="letter" style="animation-delay:.80s">h</span>
-                            <span class="letter" style="animation-delay:.88s">d</span>
-                            <span class="letter" style="animation-delay:.96s">a</span>
-                            <span class="letter" style="animation-delay:1.04s">y</span>
-                        </span>
-                    </div>
-
-                    <p class="subtitle">May today be full of sweet moments and unforgettable memories — lots of cake and
-                        love!</p>
-
-                    <div class="cta" role="group" aria-label="Call to actions">
-                        <button class="btn" id="openCardBtn">🎁 Open Card</button>
-                        <button class="btn secondary" id="surpriseBtn">🎉 Surprise</button>
-                    </div>
-
-                    <!-- decorative accent -->
-                    <div
-                        style="margin-top:18px; width:90px; height:10px; background:linear-gradient(90deg,#ff6aa2,#ffb6d7); border-radius:8px">
-                    </div>
-
-                    <!-- small extra area for mobile: profile below on small screens -->
-                </div>
-
-                <!-- right (profile + balloons) -->
-                <div class="hero-right" aria-hidden="true">
-                    <div class="profile-wrap center">
-                        <div class="ring" aria-hidden="true"></div>
-                        <div class="profile-img" id="profileImg">
-                            <!-- replace with real person image -->
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
-                                alt="Profile photo">
-                        </div>
-                    </div>
-
-                    <div class="balloon-pack" id="balloonPack">
-                        <div class="balloon b1" aria-hidden="true"></div>
-                        <div class="balloon b2" aria-hidden="true"></div>
-                        <div class="balloon b3" aria-hidden="true"></div>
-                        <div class="balloon b4" aria-hidden="true"></div>
-                    </div>
-
-                </div>
-
-                <!-- CAP (svg) - will be positioned dynamically onto the 'y' of Birthday -->
-                <svg class="cap" id="capSVG" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <g transform="translate(0,0)">
-                        <ellipse cx="60" cy="60" rx="44" ry="14" fill="#3c6fb5" opacity="0.12" />
-                        <path d="M16 44c13-18 36-26 52-26s43 12 44 26c0 0-48 28-96 0z" fill="#ffdce8" />
-                        <path d="M20 42c14-12 34-16 48-15 20 1 44 14 44 16 0 0-48 20-92-1z" fill="#ff9ecf" />
-                        <rect x="46" y="6" rx="6" ry="6" width="28" height="36" fill="#ffd3e9" />
-                        <circle cx="60" cy="14" r="8" fill="#ffd86e" />
-                    </g>
-                </svg>
-
-            </div>
-
-            <!-- small gallery & quick wishes -->
-            <div class="extra">
-                <div
-                    style="width:320px; background:linear-gradient(180deg,#fff,#fff7fb); padding:18px; border-radius:12px; box-shadow:0 12px 30px rgba(0,0,0,0.06)">
-                    <h4 style="color:#ff4d88; margin-bottom:10px;">Quick wishes</h4>
-                    <p style="color:#666; margin-bottom:10px">Tap any for an instant animated wish.</p>
-                    <div style="display:flex; gap:10px">
-                        <button class="btn" onclick="spawnEmoji('💋')">💋</button>
-                        <button class="btn" onclick="spawnEmoji('💖')">💖</button>
-                        <button class="btn" onclick="spawnEmoji('🎉')">🎉</button>
-                    </div>
-                </div>
-            </div>
-
-        </div> <!-- frame -->
-    </div> <!-- page -->
-
-    <!-- Confetti canvas -->
-    <canvas class="confetti" id="confettiCanvas"></canvas>
-
-    <!-- 3D folding card modal -->
-    <div class="card-modal" id="cardModal" aria-hidden="true">
-        <div class="backdrop" onclick="closeCard()"></div>
-        <div class="card-stage closed" id="cardStage" role="dialog" aria-modal="true" aria-label="Birthday Card">
-            <div class="close-x" tabindex="0" role="button" aria-label="Close card" onclick="closeCard()">✕</div>
-            <div class="card" id="card3d">
-                <div class="panel left">
-                    <div class="inner">
-                        <h3>To Ameer</h3>
-                        <p style="max-width:320px">A little note inside — open the right side to read your special wish.
-                        </p>
-                    </div>
-                </div>
-                <div class="panel right">
-                    <div class="inner">
-                        <h3 style="color:#ff4d88">Happy Birthday!</h3>
-                        <p style="max-width:360px">May your year be bright, cheerful, and full of sweet surprises 🎂</p>
-                        <div class="emojis">
-                            <div class="emoji">💋</div>
-                            <div class="emoji">💖</div>
-                            <div class="emoji">✨</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- Step 1: Intro -->
+    <div id="intro" class="fade">
+      <h1 class="text-5xl md:text-6xl font-playfair text-pink-400">Preparing Something Magical...</h1>
+      <p class="text-gray-300 mt-4 text-lg">Stay here, my love — your surprise is on its way ✨</p>
     </div>
 
-    <!-- Floating Hearts -->
-    <div id="hearts"></div>
+    <!-- Step 2: Countdown -->
+    <div id="countdown" class="fade hidden">
+      <h2 class="text-3xl font-playfair text-pink-400 mb-4">Almost There...</h2>
+      <div id="timer" class="text-6xl font-bold text-white tracking-wider"></div>
+    </div>
 
-    <!-- Hero Section -->
-    <section class="text-center py-20 px-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-rose-600">Ameer ❤️ Partner</h1>
-        <p class="text-lg md:text-2xl mt-4 text-gray-700">Our Journey of Love & Memories</p>
-        <button id="memoriesBtn"
-            class="mt-6 px-6 py-3 bg-rose-500 text-white font-semibold rounded-full shadow-lg hover:bg-rose-600 transition">See
-            Our Memories</button>
-    </section>
+    <!-- Step 3: Celebration -->
+    <div id="celebrate" class="fade hidden">
+      <h2 class="text-5xl font-playfair text-pink-400 mb-4">🎂 Happy Birthday My Love 💖</h2>
+      <div class="cake">
+        <div class="cake-base"></div>
+        <div class="candle"></div>
+        <div class="flame"></div>
+      </div>
+      <p class="mt-6 text-gray-300">You are my sweetest wish come true 🎀</p>
+      <button id="continueMagic" class="btn mt-8">Continue to Magic ✨</button>
+    </div>
 
-    <!-- Memories Section -->
-    <section class="py-12 px-4 max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-rose-600 mb-10">Our Memories 📸</h2>
+    <!-- Step 4: Magic Cards -->
+    <div id="magic" class="fade hidden">
+      <h3 class="text-4xl font-playfair text-pink-400 mb-8">Open Your Magic Cards 💌</h3>
+      <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div class="magic-card">Your smile makes my heart dance 💫</div>
+        <div class="magic-card">You're the reason love feels so real 🌹</div>
+        <div class="magic-card">Every second with you is golden 🕊️</div>
+        <div class="magic-card">Forever my favorite chapter 💞</div>
+      </div>
+    </div>
 
-        <!-- Swiper -->
-        <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/49/10/88/491088203598f48a7cf376f859e05484.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/fa/4c/0a/fa4c0a5f898d0debbc82949232386cda.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/06/a0/3f/06a03f0bb6dc42325c0a7690f95fdad8.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/5e/9b/e4/5e9be408b3639ed53691fd17487bc57d.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/e0/2c/82/e02c82cc4413c70884068606f8f45e52.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-                <div class="swiper-slide">
-                    <img src="https://i.pinimg.com/736x/44/8b/ab/448bab5c76d96de8c014d371ffcbb359.jpg"
-                        class="rounded-xl shadow-lg w-full h-72 object-cover" alt="">
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <div class="swiper-pagination"></div>
-            <!-- <div class="swiper-button-next"></div> -->
-            <!-- <div class="swiper-button-prev"></div> -->
+    <!-- Step 5: Memories -->
+    <div id="memories" class="fade hidden w-full mt-10">
+      <h3 class="text-4xl font-playfair text-pink-400 mb-8">Our Beautiful Memories 📸</h3>
+      <div class="swiper mySwiper w-full max-w-5xl">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="https://i.pinimg.com/736x/e0/2c/82/e02c82cc4413c70884068606f8f45e52.jpg"></div>
+          <div class="swiper-slide"><img src="https://i.pinimg.com/736x/fa/4c/0a/fa4c0a5f898d0debbc82949232386cda.jpg"></div>
+          <div class="swiper-slide"><img src="https://i.pinimg.com/736x/5e/9b/e4/5e9be408b3639ed53691fd17487bc57d.jpg"></div>
+          <div class="swiper-slide"><img src="https://i.pinimg.com/736x/44/8b/ab/448bab5c76d96de8c014d371ffcbb359.jpg"></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Scripts -->
+  <script>
+    const intro = document.getElementById("intro");
+    const countdown = document.getElementById("countdown");
+    const celebrate = document.getElementById("celebrate");
+    const magic = document.getElementById("magic");
+    const memories = document.getElementById("memories");
+    const timerEl = document.getElementById("timer");
+    let countdownTime = 6;
 
+    function show(el){ el.classList.remove("hidden"); requestAnimationFrame(()=> el.classList.add("show")); }
 
-    <script>
-        /* ---------------- Utilities & DOM references ---------------- */
-        const cap = document.getElementById('capSVG');
-        const birthdayWord = document.getElementById('birthdayWord');
-        const openCardBtn = document.getElementById('openCardBtn');
-        const surpriseBtn = document.getElementById('surpriseBtn');
-        const cardModal = document.getElementById('cardModal');
-        const cardStage = document.getElementById('cardStage');
-        const confettiCanvas = document.getElementById('confettiCanvas');
-        const ctx = confettiCanvas.getContext('2d');
+    function startSequence(){
+      show(intro);
+      setTimeout(()=>{
+        intro.classList.remove("show");
+        setTimeout(()=>{
+          intro.classList.add("hidden");
+          show(countdown);
+          startTimer();
+        },800);
+      },2500);
+    }
 
-        /* ---------------- Responsive canvas size ---------------- */
-        let W = confettiCanvas.width = innerWidth;
-        let H = confettiCanvas.height = innerHeight;
-        window.addEventListener('resize', () => { W = confettiCanvas.width = innerWidth; H = confettiCanvas.height = innerHeight; });
-
-        /* ---------------- Position cap to land on last letter of "Birthday" ---------------- */
-        function positionCap() {
-            // find bounding box of last visible letter (the 'y')
-            const letters = birthdayWord.querySelectorAll('.letter');
-            if (!letters || letters.length === 0) return;
-            const lastLetter = letters[letters.length - 1];
-            const rect = lastLetter.getBoundingClientRect();
-            // compute target position (cap center slightly above letter)
-            const pageRect = document.body.getBoundingClientRect();
-            const capWidth = cap.getBoundingClientRect().width || 110;
-            const targetX = rect.left + rect.width / 2 - capWidth / 2;
-            // targetY near rect.top minus a bit
-            const targetY = rect.top - 80;
-            // Animate top and left smoothly
-            cap.style.transition = 'top 720ms cubic-bezier(.2,.9,.2,1), left 720ms cubic-bezier(.2,.9,.2,1), transform 720ms';
-            // Ensure cap is visible (in case)
-            cap.style.left = Math.max(6, targetX) + 'px';
-            cap.style.top = Math.max(6, targetY) + 'px';
+    function startTimer(){
+      updateTimer();
+      const int = setInterval(()=>{
+        countdownTime--;
+        updateTimer();
+        if(countdownTime<=0){
+          clearInterval(int);
+          countdown.classList.remove("show");
+          setTimeout(()=>{
+            countdown.classList.add("hidden");
+            show(celebrate);
+          },700);
         }
+      },1000);
+    }
 
-        /* initial place cap offscreen then drop */
-        function dropCap() {
-            // start position already in CSS above screen, then position to land
-            positionCap();
-            // small bounce effect after landing
-            setTimeout(() => {
-                cap.animate([
-                    { transform: 'translateY(0) rotate(0deg)' },
-                    { transform: 'translateY(-6px) rotate(-3deg)' },
-                    { transform: 'translateY(0) rotate(0deg)' }
-                ], { duration: 600, easing: 'ease-out' });
-            }, 760);
+    function updateTimer(){
+      timerEl.textContent = "00:" + countdownTime.toString().padStart(2,'0');
+    }
+
+    document.getElementById("continueMagic").addEventListener("click",()=>{
+      celebrate.classList.remove("show");
+      setTimeout(()=>{
+        celebrate.classList.add("hidden");
+        show(magic);
+      },600);
+    });
+
+    const cards = document.querySelectorAll(".magic-card");
+    let opened=0;
+    cards.forEach(card=>{
+      card.addEventListener("click",()=>{
+        card.style.opacity=0;
+        card.style.transform="scale(0.8)";
+        opened++;
+        if(opened===cards.length){
+          setTimeout(()=>{
+            magic.classList.remove("show");
+            setTimeout(()=>{
+              magic.classList.add("hidden");
+              show(memories);
+              new Swiper(".mySwiper",{
+                loop:true,
+                autoplay:{delay:2000,disableOnInteraction:false},
+                slidesPerView:1.3,
+                centeredSlides:true,
+                spaceBetween:20
+              });
+            },600);
+          },600);
         }
+      });
+    });
 
-        /* Call after fonts/DOM loaded */
-        window.addEventListener('load', () => {
-            // reposition cap after layout stabilizes
-            setTimeout(positionCap, 400);
-            setTimeout(dropCap, 700);
-        });
-
-        /* reposition on resize & orientation change */
-        window.addEventListener('resize', () => setTimeout(positionCap, 200));
-
-        /* ---------------- Balloons small randomization for lifelike motion ---------------- */
-        const balloons = document.querySelectorAll('.balloon');
-        balloons.forEach((b, i) => {
-            b.style.transform = `translateX(${(i - 1.5) * 6}px)`;
-            b.style.left = `${Math.random() * 8}px`;
-            // randomize animation duration slightly
-            b.style.animationDuration = (4.2 + Math.random() * 2) + 's';
-            b.style.animationDelay = (Math.random() * 0.8) + 's';
-        });
-
-        /* ---------------- Floating emojis spawn function ---------------- */
-        function spawnFloatingEmojis(list, count = 10) {
-            for (let i = 0; i < count; i++) {
-                const e = document.createElement('div');
-                e.className = 'floating-emoji';
-                e.style.left = (12 + Math.random() * 72) + 'vw';
-                e.style.top = (40 + Math.random() * 30) + 'vh';
-                e.style.fontSize = (16 + Math.random() * 28) + 'px';
-                e.textContent = list[Math.floor(Math.random() * list.length)];
-                document.body.appendChild(e);
-                setTimeout(() => e.remove(), 2800 + Math.random() * 800);
-            }
-        }
-        function spawnEmoji(symbol) { spawnFloatingEmojis([symbol], 8) }
-
-        /* ---------------- Confetti engine (lightweight) ---------------- */
-        let confettiParticles = []; let confettiActive = false;
-        function rand(min, max) { return Math.random() * (max - min) + min }
-        function createConfetti(n = 120) {
-            confettiParticles = [];
-            for (let i = 0; i < n; i++) {
-                confettiParticles.push({
-                    x: rand(0, W),
-                    y: rand(-H, 0),
-                    w: rand(6, 12), h: rand(8, 14),
-                    vx: rand(-1, 1), vy: rand(1.2, 3),
-                    r: rand(0, 360), vr: rand(-6, 6),
-                    color: ['#ff6aa2', '#ffd27a', '#7ad7ff', '#ff9ecf', '#cdb0ff'][Math.floor(rand(0, 5))]
-                });
-            }
-        }
-        function renderConfetti() {
-            if (!confettiActive) return;
-            ctx.clearRect(0, 0, W, H);
-            for (let p of confettiParticles) {
-                p.x += p.vx; p.y += p.vy; p.r += p.vr;
-                p.vy += 0.02;
-                p.vx += Math.sin(p.y * 0.01) * 0.02;
-                if (p.y > H + 60) { p.y = -40; p.x = rand(0, W); p.vy = rand(1, 3) }
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.r * Math.PI / 180);
-                ctx.fillStyle = p.color;
-                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-                ctx.restore();
-            }
-            requestAnimationFrame(renderConfetti);
-        }
-        let confettiTimer = null;
-        function startConfetti(duration = 2000) {
-            if (confettiActive) return;
-            confettiActive = true;
-            createConfetti(140);
-            renderConfetti();
-            if (confettiTimer) clearTimeout(confettiTimer);
-            confettiTimer = setTimeout(stopConfetti, duration);
-        }
-        function stopConfetti() {
-            confettiActive = false;
-            confettiParticles = [];
-            ctx.clearRect(0, 0, W, H);
-        }
-
-        /* ---------------- Card open/close logic ---------------- */
-        openCardBtn.addEventListener('click', openCard);
-        function openCard() {
-            cardModal.classList.add('active');
-            cardModal.setAttribute('aria-hidden', 'false');
-            // small timeout so CSS can apply before transform
-            setTimeout(() => cardStage.classList.add('open'), 60);
-            // effects
-            startConfetti(2200);
-            spawnFloatingEmojis(['💋', '💖', '🎉', '✨'], 16);
-        }
-        function closeCard() {
-            cardStage.classList.remove('open');
-            setTimeout(() => {
-                cardModal.classList.remove('active');
-                cardModal.setAttribute('aria-hidden', 'true');
-                stopConfetti();
-            }, 700);
-        }
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCard() });
-
-        /* surprise button */
-        surpriseBtn.addEventListener('click', () => {
-            spawnFloatingEmojis(['💖', '🎉', '💋', '✨'], 18);
-            startConfetti(1600);
-        });
-
-        /* click profile to pop hearts */
-        document.getElementById('profileImg').addEventListener('click', () => spawnFloatingEmojis(['💖', '😘'], 10));
-
-        /* accessibility: close by clicking outside implemented via backdrop */
-
-        /* ---------------- small polish: animate letters again when open (optional) ---------------- */
-        function replayLetters() {
-            const letters = document.querySelectorAll('.letter');
-            letters.forEach((l, i) => {
-                l.style.animation = 'none';
-                // reflow
-                void l.offsetWidth;
-                l.style.animation = '';
-                l.style.animation = `letterUp .55s cubic-bezier(.2,.9,.2,1) forwards`;
-                l.style.animationDelay = `${0.08 + i * 0.08}s`;
-            });
-        }
-        openCardBtn.addEventListener('click', () => setTimeout(replayLetters, 220));
-
-        /* final: initial tiny stagger for letters if fonts load late */
-        window.addEventListener('load', () => setTimeout(() => {
-            // ensure cap reposition when layout settled
-            positionCap();
-        }, 350));
-
-
-        // Floating hearts generator
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.className = "heart";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (5 + Math.random() * 5) + "s";
-            document.getElementById("hearts").appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
-        setInterval(createHeart, 500);
-
-        // Show memories
-        document.getElementById("memoriesBtn").addEventListener("click", () => {
-            document.getElementById("memoriesSection").classList.toggle("hidden");
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-        });
-
-
-        var swiper = new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            centeredSlides: true,
-            autoplay: {
-                delay: 1200,
-                disableOnInteraction: false,
-            },
-            breakpoints: {
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-
-    </script>
+    startSequence();
+  </script>
 </body>
-
 </html>
