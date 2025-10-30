@@ -133,7 +133,7 @@
     .intro-dot{ width:20px; height:20px; }
     svg.heart{ width:110px; height:110px; }
     .small-card{ width:260px; height:150px; }
-    .slide{ height:260px }
+    .slide{ height:440px }
     .cake-plate{ max-width:95% }
     .cake-plate .candles{ top:-84px }
     .balloon{ width:44px; height:60px; }
@@ -192,7 +192,7 @@
 
   <!-- CAKE (opens when user presses Let's celebrate) -->
   <section id="cakeSection" class="hidden rounded-2xl px-6 text-center relative overflow-visible">
-    <h3 id="cakeTitle" class="text-3xl font-bold">Happy birthday, Madam Ji</h3>
+    <h3 id="cakeTitle" class="text-3xl font-bold">Happy birthday, Queen of my Heart 💖</h3>
     <p class="text-sm text-gray-400">It's your special day</p>
 
     <div class="mt-8 flex justify-center">
@@ -248,7 +248,7 @@
 
     <!-- <div id="balloonsContainer" class="pointer-events-none absolute inset-0 overflow-hidden"></div> -->
 
-    <div class="absolute top-96 left-20">
+    <div class="absolute top-[420px] left-20">
       <button id="continueMagicBtn" class="px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold shadow-lg">Continue to magic</button>
     </div>
   </section>
@@ -258,8 +258,8 @@
     <h3 class="text-2xl font-semibold">Tap to open your first message</h3>
     <div class="mt-6 flex justify-center">
       <div id="bigCard" class="big-card bg-gradient-to-r from-slate-800 to-slate-700 p-6 rounded-2xl text-left text-white flex flex-col justify-between cursor-pointer max-w-[460px] w-full">
-        <div><div class="text-sm opacity-70">Tap here</div><div class="text-xl font-bold mt-2">Your first surprise</div></div>
-        <div class="text-xs opacity-60">Tap multiple times to reveal more</div>
+        <div><div class="text-sm opacity-70">Tap here</div><div class="text-xl font-bold mt-2">Everyone has a story.</div></div>
+        <div class="text-xs opacity-60">Mine is beautiful with your existance!</div>
       </div>
     </div>
 
@@ -274,7 +274,7 @@
   <section id="memoriesSection" class="hidden rounded-2xl p-6 text-center">
     <h3 class="text-2xl font-semibold">Memories</h3>
     <div class="mt-6 relative">
-      <div id="slider" class="w-full h-80 overflow-hidden rounded-xl">
+      <div id="slider" class="w-full h-[100%] overflow-hidden rounded-xl">
         <div id="slides" class="flex transition-transform duration-700"></div>
       </div>
     </div>
@@ -286,7 +286,7 @@
 
   <!-- LETTER -->
   <section id="letterSection" class="hidden rounded-2xl p-6 text-center">
-    <h3 class="text-2xl font-semibold">A little letter</h3>
+    <h3 class="text-2xl font-semibold">A Special letter</h3>
     <div class="mt-6 bg-gray-900 p-4 rounded-lg text-left max-w-prose mx-auto shadow-sm">
       <p id="letterText" class="text-gray-200 text-base typing-cursor whitespace-pre-wrap"></p>
     </div>
@@ -302,20 +302,20 @@
 const INTRO_DURATION = 5000;        // ms
 const COUNTDOWN_SECONDS = 10;       // demo; change to real time as needed
 const MEMORIES_AUTOPLAY = 2000;     // 2s per slide
-const NAME = 'Madam Ji';
+
 
 const images = [
-  'https://images.unsplash.com/photo-1517817748498-5739b1b8b1eb?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1400&q=80',
-  'https://images.unsplash.com/photo-1508973375-5cdd6c0c2a75?auto=format&fit=crop&w=1400&q=80'
+  'two.jpg',
+  'one.jpg',
+  'IMG-20251030-WA0025.jpg',
+  'three.jpg'
 ];
 
 const cardMessages = [
-  '🌸 You make every day brighter',
-  '🎂 Hope your day is full of smiles',
-  '💖 You deserve all the happiness',
-  '✨ Keep shining always'
+  '🌸 Every one has a wish, Mine is to be with you till the end!',
+  '🎂 Everyone has a good luck charm, Mine is your presence!',
+  '💖 Everyone has a soft corner for someone, Mine is only for you!',
+  '✨ Everyone has someone special, And for me, that person is only you'
 ];
 
 /* =================== HELPERS =================== */
@@ -558,7 +558,7 @@ bigCard.addEventListener('click', ()=>{
   smallCards.appendChild(card);
   setTimeout(()=> {
     card.style.transition = 'transform .55s cubic-bezier(.2,.9,.2,1), opacity .45s, left .55s';
-    card.style.left = `calc(50% + ${offsetX}px)`;
+    card.style.left = `calc(40% + ${offsetX}px)`;
     card.style.transform = 'translateX(-50%) translateY(-130px) scale(1)';
     card.classList.add('show');
     clearPrevBlurs();
@@ -582,7 +582,7 @@ function populateSlides(){
     const s = document.createElement('div'); s.className='slide flex-shrink-0 rounded-xl';
     s.style.backgroundImage = `url(${src})`; s.style.backgroundSize='cover';
     const inner = document.createElement('div'); inner.className='w-full h-full flex items-end p-4';
-    inner.innerHTML = `<div class="bg-black/40 p-3 rounded-md backdrop-blur-sm max-w-xl text-left"> <div class="text-lg font-semibold text-white">Memories</div> <div class="text-sm text-gray-200 mt-1">A beautiful moment to remember</div></div>`;
+    inner.innerHTML = `<div class="bg-black/40 p-3 rounded-md backdrop-blur-sm max-w-xl text-left"> <div class="text-lg font-semibold text-white">Memorable Moments</div> <div class="text-sm text-gray-200 mt-1">moments i never forget Aminah 💖.</div></div>`;
     s.appendChild(inner); slidesEl.appendChild(s);
   });
   updateSlider(); startAutoSlide();
@@ -596,7 +596,11 @@ function startAutoSlide(){ clearInterval(slideInterval); slideInterval = setInte
 
 /* =================== LETTER typing =================== */
 function letterContent(){
-  return `Dearest ${NAME},\n\nToday the stars seem closer and every little thing sings for you. Thank you for the warmth you share, and for filling every moment with meaning. May your year be bright with laughter, dreamy with surprises, and full of the love you give to everyone around you. Happy birthday — you are deeply cherished.\n\nWith love,`;
+  return `💖 HBD CUTEii Aminah 💖 \n\n
+  Happy birthday to the person I love the most You are the reson for my happiness, and I can never thank you enough for it.\n
+  Or jana jab sy me ap sy mila hun mujy meri zindagi bht pyari lagny lagi h,ap mujy meri jaan sy b zyada azeez han,ap k sadky me apni puri duniya apna sab kuch waar sakta hun \n\n mera pyaar ap k ek samundar jasa ha jis ke gehrai kabhi ni samjhi ja sakti,Me ny hamysha apko Rooh sy chaha ha or Allah ke raza k liye muhabbat ke ha,AP meri ankhoo ka noor ho,mery dill ka Sakoon ho,meri Mata-e-jaan ho,mera jan-e-jahan ho,is specail day py apko bht c khushiya mubarik ho \n\nAllah pak apko kabhi ko dukh na dy ap k hisy ka her gum mujy mil jayee Allah pak apko do jahano ke khushiya naseeb kry Ameen.Some Specail words for you..\n\nWaqat apko zinda rakhy,bharain ap pr fida hon,Rehmatoo k derwaze hamysha ap pr khulaee or unhy kabhi bnd hony ka hukam na milee,her dukh her be-sakoni k sayee andhay ho jayee ap tak any ke koi rah unhye nazer na ayee Ameen, Happy Birthday MERI Kul Kainat Meri Aminah.\n\n 
+  Once again, a very Happy Birthday to you 🎂 Enjoy your day to the fullest... Love you biggie💖
+  `;
 }
 function startTyping(text, el){
   el.textContent = ''; let i=0; const speed=26; const t=setInterval(()=> {
@@ -631,7 +635,7 @@ function init(){
   $('#oneLastThing').addEventListener('click', ()=> { showSection('letterSection'); startTyping(letterContent(), $('#letterText')); });
 
   // set name on cake title
-  $('#cakeTitle').textContent = `Happy birthday, ${NAME}`;
+  $('#cakeTitle').textContent = `Happy birthday, Queen of my Heart ❤`;
 
   // set countdown card gradients
   const c = document.querySelectorAll('.count-card'); if(c && c.length>=4){
